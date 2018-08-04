@@ -1,19 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import CategoriesHeader from './CategoriesHeader';
+import PostsSection from './PostsSection';
+import Section from '../styles/Section';
 
-const Root = ({ posts }) => (
-  <section>
-    <h1>all posts</h1>
-    { posts.map((p, index) => (
-      <span key={index} >{ p.title }</span>
-    ))}
-  </section>
+const Root = ({ posts, categories }) => (
+  <Section>
+    <CategoriesHeader
+      categories={categories}
+      />
+    <PostsSection
+      posts={posts}
+      />
+  </Section>
 )
 
 function mapStateToProps (state) {
-  console.log(Object.values(state.posts)[0].title, '<<')
   return {
-    posts: Object.values(state.posts),
+    posts: state.posts,
+    categories: state.categories,
   }
 }
 
