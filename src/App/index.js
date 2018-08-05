@@ -21,6 +21,9 @@ class App extends Component {
         <Route exact path='/' render={() => (
           <Root />
         )} />
+        <Route exact path='/category/:name' render={({ match }) => (
+          <Root type={match.params.name}/>
+        )} />
       </Main>
     );
   }

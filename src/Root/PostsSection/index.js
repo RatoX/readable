@@ -24,7 +24,7 @@ const ItemHeader = Item.extend`
   font-weight: bold;
 `
 
-const ItemContainer = styled.div`
+const ItemContainer = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,12 +68,14 @@ const PostsSection = ({ posts, sortBy, isAsc, onClick }) => (
         <span onClick={onClick('voteScore')}>score</span>
         <span onClick={onClick('title')}>title</span>
         <span onClick={onClick('timestamp')}>date</span>
+        <span>category</span>
       </ItemHeader>
     { posts.sort(ordering(sortBy, isAsc)).map((p, index) => (
       <Item key={index} >
         <Score>{ p.voteScore }</Score>
         <Title>{ p.title }</Title>
         <Date>{ p.timestamp }</Date>
+        <ItemContainer>{ p.category }</ItemContainer>
       </Item>
     ))}
     </List>

@@ -8,6 +8,18 @@ ul, ol, li {
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  color: currentColor;
+}
+
+a:any-link {
+  color: currentColor;
+}
+
 body {
   width: 100vw;
   min-height: 100vh;

@@ -4,7 +4,7 @@ import CategoriesHeader from './CategoriesHeader';
 import PostsSection from './PostsSection';
 import Section from '../styles/Section';
 
-const Root = ({ posts, categories }) => (
+const Root = ({ type = 'all', posts, categories }) => (
   <Section>
     <CategoriesHeader
       categories={categories}
