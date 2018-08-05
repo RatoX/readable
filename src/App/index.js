@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import Root from '../Root';
+import Category from '../Category';
 import styled from 'styled-components'
 
 const Main = styled.main`
@@ -19,10 +19,10 @@ class App extends Component {
     return (
       <Main>
         <Route exact path='/' render={() => (
-          <Root />
+          <Category />
         )} />
         <Route exact path='/category/:name' render={({ match }) => (
-          <Root type={match.params.name}/>
+          <Category type={match.params.name}/>
         )} />
       </Main>
     );

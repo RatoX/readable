@@ -4,7 +4,7 @@ import CategoriesHeader from './CategoriesHeader';
 import PostsSection from './PostsSection';
 import Section from '../styles/Section';
 
-const Root = ({ type = 'all', posts, categories }) => (
+const Category = ({ type = 'all', posts, categories }) => (
   <Section>
     <CategoriesHeader
       categories={categories}
@@ -39,4 +39,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Root)
+)(Category)
