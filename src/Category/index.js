@@ -15,9 +15,11 @@ const Category = ({ type = 'all', posts, categories }) => (
   </Section>
 )
 
-function mapStateToProps (state) {
+function mapStateToProps (state, { type = 'all' }) {
+  const byType = (p) => type === 'all' || p.category === type
+
   return {
-    posts: state.posts,
+    posts: state.posts.filter(byType),
     categories: state.categories,
   }
 }
