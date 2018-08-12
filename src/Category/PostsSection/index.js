@@ -1,6 +1,7 @@
 import React from 'react';
 import { compose, withHandlers, defaultProps, withState } from 'recompose';
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import Section from '../../styles/Section';
 
 const List = styled.ol`
@@ -73,7 +74,11 @@ const PostsSection = ({ posts, sortBy, isAsc, onClick }) => (
     { posts.sort(ordering(sortBy, isAsc)).map((p, index) => (
       <Item key={index} >
         <Score>{ p.voteScore }</Score>
-        <Title>{ p.title }</Title>
+        <Title>
+          <Link to={`/post/${p.id}`}>
+            { p.title }
+          </Link>
+        </Title>
         <Date>{ p.timestamp }</Date>
         <ItemContainer>{ p.category }</ItemContainer>
       </Item>

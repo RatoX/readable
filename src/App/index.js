@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import Category from '../Category';
+import Post from '../Post';
 import styled from 'styled-components'
 
 const Main = styled.main`
@@ -23,6 +24,9 @@ class App extends Component {
         )} />
         <Route exact path='/category/:name' render={({ match }) => (
           <Category type={match.params.name}/>
+        )} />
+        <Route exact path='/post/:id' render={({ match }) => (
+          <Post id={match.params.id}/>
         )} />
       </Main>
     );

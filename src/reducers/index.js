@@ -41,6 +41,8 @@ const initialStateCategories = [
 ]
 
 function posts (state = initialState, action) {
+  console.log('POSTS TYPE', action.type)
+
   switch (action.type) {
     case 'ADD_POST' :
       const { post } = action
@@ -55,6 +57,8 @@ function posts (state = initialState, action) {
 }
 
 function categories (state = initialStateCategories, action) {
+  console.log('CATEGORIES TYPE', action.type)
+
   switch (action.type) {
     default :
       return state
