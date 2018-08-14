@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { compose, withHandlers } from 'recompose'
 import { VoteButtonAdd, VoteButtonRemove } from '../../styles/VoteButton'
+import TextAction from '../../styles/TextAction'
 import { upVoteComment as upVoteAction, downVoteComment as downVoteAction, deleteComment as deleteCommentAction } from '../../../store/actions'
 
 const ListItem = styled.li`
@@ -24,7 +25,7 @@ const VoteButtons = styled.section`
   margin-left: auto;
 `
 
-const Comment = ({ id, body, author, voteScore, vote }) => (
+const Comment = ({ id, body, author, voteScore, vote, deleteComment }) => (
   <ListItem>
     <section>
       <Votes>{ voteScore } votes</Votes> {body} <Author>by {author}</Author>
@@ -33,6 +34,9 @@ const Comment = ({ id, body, author, voteScore, vote }) => (
       <VoteButtonAdd onClick={vote(id, 'up')}>+</VoteButtonAdd>
       <VoteButtonRemove onClick={vote(id, 'down')}>-</VoteButtonRemove>
     </VoteButtons>
+    <TextAction onClick={deleteComment(id)}>
+      delete
+    </TextAction>
   </ListItem>
 )
 
@@ -53,6 +57,10 @@ export default compose(
       } else if (type === 'down') {
         downVote(id)
       }
+    },
+
+    deleteComment: ({ deleteComment }) => ( id ) => event => {
+      deleteComment(id)
     },
   })
 )(Comment)

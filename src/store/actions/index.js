@@ -104,5 +104,6 @@ export function deleteComment(id) {
   return function(dispatch) {
     return fetch(`http://localhost:3001/comments/${id}`, { method: 'DELETE', headers: { 'Authorization': 'whw' } })
       .then((s) => s.json())
+      .then((d) => dispatch(receiveComment(d)))
   };
 }

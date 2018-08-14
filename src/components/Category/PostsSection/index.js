@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Section from '../../styles/Section';
 import { VoteButtonAdd, VoteButtonRemove } from '../../styles/VoteButton';
+import TextAction from '../../styles/TextAction';
 
 const List = styled.ol`
   display: flex;
@@ -48,16 +49,6 @@ const ItemContainer = styled.span`
 
 const Score = ItemContainer.withComponent('small').extend`
 
-`
-
-const TextAction = ItemContainer.withComponent('span').extend`
-  text-decoration: underline;
-
-  :focus,
-  :hover,
-  :active {
-    color: #204ecf;
-  }
 `
 
 const Date = ItemContainer.withComponent('time').extend`
