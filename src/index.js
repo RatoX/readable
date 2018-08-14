@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import App from './App';
-import reducer from './reducers';
+import reducer from './store/reducers';
 import registerServiceWorker from './registerServiceWorker';
 import './style.css';
 

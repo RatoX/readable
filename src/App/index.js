@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import Category from '../Category';
-import Post from '../Post';
+import Category from '../components/Category';
+import Post from '../components/Post';
 import styled from 'styled-components'
 
 const Main = styled.main`
