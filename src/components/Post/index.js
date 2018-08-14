@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import styled from 'styled-components'
 import { compose, lifecycle } from 'recompose';
+import { Link } from 'react-router-dom'
 import { loadPost as loadPostAction, loadComments as loadCommentsAction } from '../../store/actions'
 import Section from '../styles/Section'
 import Comments from './Comments'
@@ -17,8 +18,11 @@ const Body = styled.p`
   margin: 15px 0;
 `
 
-const Post = ({ title, body, author, commentCount, comments }) => (
+const Post = ({ id, title, body, author, commentCount, comments }) => (
   <Section>
+    <Link to="/">
+      {'<'} Back
+    </Link>
     <Information>
       <h1>{ title } by { author }</h1>
       <Body>
@@ -28,7 +32,7 @@ const Post = ({ title, body, author, commentCount, comments }) => (
         { commentCount } comment(s)
       </small>
     </Information>
-    <Comments comments={ comments } />
+    <Comments postId={id} comments={ comments } />
   </Section>
 )
 

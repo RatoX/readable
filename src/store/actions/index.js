@@ -1,5 +1,13 @@
 import { UPDATE_POST, UPDATE_POST_COMMENT, ADD_POSTS } from '../types'
 
+// https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+function uuidv4() {/* eslint-ignore */
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  )
+}
+
+const TOKEN = 'dsdd'
 const receivePost = (post) => ({ type: UPDATE_POST, post })
 const receiveComment = (comment) => ({ type: UPDATE_POST_COMMENT, comment })
 const receivePostComments = (id, data) => {
@@ -30,7 +38,7 @@ const receivePosts = (data) => {
 
 export function loadPost(id) {
   return function(dispatch) {
-    return fetch(`http://localhost:3001/posts/${id}`, { headers: { 'Authorization': 'whw' } })
+    return fetch(`http://localhost:3001/posts/${id}`, { headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
       .then((d) => dispatch(receivePost(d)))
   };
@@ -38,7 +46,7 @@ export function loadPost(id) {
 
 export function loadComments(id) {
   return function(dispatch) {
-    return fetch(`http://localhost:3001/posts/${id}/comments`, { headers: { 'Authorization': 'whw' } })
+    return fetch(`http://localhost:3001/posts/${id}/comments`, { headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
       .then((d) => dispatch(receivePostComments(id, d)))
   };
@@ -48,7 +56,7 @@ export function loadPostsFromCategory(type = 'all') {
   const path = type === 'all' ? '/posts' : `/${type}/posts`
 
   return function(dispatch) {
-    return fetch(`http://localhost:3001${path}`, { headers: { 'Authorization': 'whw' } })
+    return fetch(`http://localhost:3001${path}`, { headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
       .then((d) => dispatch(receivePosts(d)))
   };
@@ -57,7 +65,7 @@ export function loadPostsFromCategory(type = 'all') {
 const vote = (id, option, type = 'posts', cb) => {
   const body = JSON.stringify({ option })
   const headers = {
-    'Authorization': 'whw',
+    'Authorization': TOKEN,
     'Content-Type': 'application/json'
   }
 
@@ -86,7 +94,7 @@ export function downVotePost(id) {
 
 export function deletePost(id) {
   return function(dispatch) {
-    return fetch(`http://localhost:3001/posts/${id}`, { method: 'DELETE', headers: { 'Authorization': 'whw' } })
+    return fetch(`http://localhost:3001/posts/${id}`, { method: 'DELETE', headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
       .then((d) => dispatch(receivePost(d)))
   };
@@ -102,8 +110,26 @@ export function downVoteComment(id) {
 
 export function deleteComment(id) {
   return function(dispatch) {
-    return fetch(`http://localhost:3001/comments/${id}`, { method: 'DELETE', headers: { 'Authorization': 'whw' } })
+    return fetch(`http://localhost:3001/comments/${id}`, { method: 'DELETE', headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
       .then((d) => dispatch(receiveComment(d)))
+  };
+}
+
+export function addComment(postId, { author, body }) {
+  const comment = {
+    id: uuidv4(),
+    timestamp: (new Date()).getTime(),
+    parentId: postId,
+    voteScore: 1,
+    body,
+    author,
+  }
+  const bodyHttp = JSON.stringify(comment)
+
+  return function(dispatch) {
+    return fetch(`http://localhost:3001/comments`, { body: bodyHttp, method: 'POST', headers: { 'Authorization': TOKEN } })
+      .then((s) => s.json())
+      .then((d) => dispatch(receiveComment({ ...comment, ...d })))
   };
 }
