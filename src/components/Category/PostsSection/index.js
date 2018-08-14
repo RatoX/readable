@@ -76,16 +76,7 @@ const VoteButtonRemove = VoteButton.extend`
 `
 
 
-const validateKey = (key, object) => {
-  if (!object[key]) {
-    console.error(`${key} does not exists as key, available keys: ${Object.keys(object)} `)
-  }
-}
-
 const ordering = (by, isAsc) => (x, y) => {
-  validateKey(by, x)
-  validateKey(by, y)
-
   if (isAsc) {
     return `${x[by]}`.localeCompare(`${y[by]}`)
   }
@@ -102,8 +93,8 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, vote }) => (
         <span onClick={sort('voteScore')}>score</span>
         <span onClick={sort('title')}>title</span>
         <span onClick={sort('timestamp')}>date</span>
+        <span onClick={sort('commentCount')}>comments</span>
         <span>category</span>
-        <span>comments</span>
       </ItemHeader>
     { posts.sort(ordering(sortBy, isAsc)).map((p, index) => (
       <Item key={index} >
@@ -118,8 +109,8 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, vote }) => (
           </Link>
         </Title>
         <Date>{ p.timestamp }</Date>
-        <ItemContainer>{ p.category }</ItemContainer>
         <ItemContainer>{ p.commentCount }</ItemContainer>
+        <ItemContainer>{ p.category }</ItemContainer>
       </Item>
     ))}
     </List>
