@@ -40,7 +40,7 @@ export function loadPostsFromCategory(type = 'all') {
   };
 }
 
-const vote = (id, option) => {
+const votePost = (id, option) => {
   const body = JSON.stringify({ option })
   const headers = {
     'Authorization': 'whw',
@@ -54,12 +54,12 @@ const vote = (id, option) => {
   };
 }
 
-export function upVote(id) {
-  return vote(id, 'upVote')
+export function upVotePost(id) {
+  return votePost(id, 'upVote')
 }
 
-export function downVote(id) {
-  return vote(id, 'downVote')
+export function downVotePost(id) {
+  return votePost(id, 'downVote')
 }
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, withHandlers, defaultProps, withState } from 'recompose';
-import { upVote as upVoteAction, downVote as downVoteAction, deletePost as deletePostAction } from '../../../store/actions'
+import { upVotePost as upVoteAction, downVotePost as downVoteAction, deletePost as deletePostAction } from '../../../store/actions'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Section from '../../styles/Section';
