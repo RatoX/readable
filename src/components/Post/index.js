@@ -41,10 +41,15 @@ function mapDispatchToProps (dispatch) {
 
 function mapStateToProps (state, props) {
   const { id } = props
+  const post = state.posts[id] || {}
 
   return {
     id: props.id,
-    ...state.posts[id]
+    title: post.title,
+    body: post.body,
+    author: post.author,
+    commentCount: post.commentCount,
+    comments: Object.values(post.comments || {}),
   }
 }
 

@@ -5,6 +5,7 @@ import { upVotePost as upVoteAction, downVotePost as downVoteAction, deletePost 
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Section from '../../styles/Section';
+import { VoteButtonAdd, VoteButtonRemove } from '../../styles/VoteButton';
 
 const List = styled.ol`
   display: flex;
@@ -62,25 +63,6 @@ const TextAction = ItemContainer.withComponent('span').extend`
 const Date = ItemContainer.withComponent('time').extend`
 
 `
-
-const VoteButton = styled.span`
-  cursor: pointer;
-  font-size: 30px;
-  font-weight: bold;
-
-  + span {
-    margin-left: 40px;
-  }
-`
-
-const VoteButtonAdd = VoteButton.extend`
-  color: #204ecf;
-`
-
-const VoteButtonRemove = VoteButton.extend`
-  color: #e62857;
-`
-
 
 const ordering = (by, isAsc) => (x, y) => {
   if (isAsc) {

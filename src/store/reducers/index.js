@@ -18,9 +18,22 @@ const initialStateCategories = [
 ]
 
 function posts (state = initialState, action) {
-  const { post, posts } = action
+  const { post, comment, posts } = action
 
   switch (action.type) {
+    case 'UPDATE_POST_COMMENT' :
+      return {
+        ...state,
+        [comment.parentId]: {
+          ...state[comment.parentId],
+          comments: {
+            ...state[comment.parentId]['comments'],
+            [comment.id]: {
+              ...comment
+            }
+          }
+        }
+      }
     case 'UPDATE_POST' :
       return {
         ...state,
