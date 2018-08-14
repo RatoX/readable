@@ -1,11 +1,6 @@
 import { combineReducers } from 'redux'
 
-const initialState = {
-  '8xf0y6ziyjabvozdd253nd': {
-  },
-  '6ni6ok3ym7mf1p33lnez': {
-  }
-}
+const initialState = { }
 
 const initialStateCategories = [
   {
@@ -23,7 +18,6 @@ const initialStateCategories = [
 ]
 
 function posts (state = initialState, action) {
-  console.log('POSTS TYPE', action.type)
   const { post, posts } = action
 
   switch (action.type) {
@@ -46,8 +40,6 @@ function posts (state = initialState, action) {
 }
 
 function categories (state = initialStateCategories, action) {
-  console.log('CATEGORIES TYPE', action.type)
-
   switch (action.type) {
     default :
       return state

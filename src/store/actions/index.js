@@ -39,3 +39,25 @@ export function loadPostsFromCategory(type = 'all') {
       .then((d) => dispatch(receivePosts(d)))
   };
 }
+
+const vote = (id, option) => {
+  const body = JSON.stringify({ option })
+  const headers = {
+    'Authorization': 'whw',
+    'Content-Type': 'application/json'
+  }
+
+  return function(dispatch) {
+    return fetch(`http://localhost:3001/posts/${id}`, { body, method: 'POST', headers })
+      .then((s) => s.json())
+      .then((d) => dispatch(receivePost(d)))
+  };
+}
+
+export function upVote(id) {
+  return vote(id, 'upVote')
+}
+
+export function downVote(id) {
+  return vote(id, 'downVote')
+}
