@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { compose, lifecycle } from 'recompose';
 import CategoriesHeader from './CategoriesHeader';
 import PostsSection from './PostsSection';
 import Section from '../styles/Section';
+import { loadPostsFromCategory as loadPostsFromCategoryAction } from '../../store/actions'
 
 const Category = ({ type = 'all', posts, categories }) => (
   <Section>
@@ -19,26 +21,25 @@ function mapStateToProps (state, { type = 'all' }) {
   const byType = (p) => type === 'all' || p.category === type
 
   return {
-    posts: state.posts.filter(byType),
+    posts: Object.values(state.posts).filter(byType),
     categories: state.categories,
-  }
-}
-
-
-function addPost ({ title }) {
-  return {
-    type: 'ADD_POST',
-    title
+    type,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    addPost: (data) => dispatch(addPost(data)),
+    loadPostsFromCategory: (id) => dispatch(loadPostsFromCategoryAction(id)),
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  lifecycle({
+    componentDidMount() {
+      const { loadPostsFromCategory, type } = this.props
+
+      loadPostsFromCategory(type)
+    }
+  }),
 )(Category)

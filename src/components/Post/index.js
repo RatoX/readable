@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import styled from 'styled-components'
-import { compose, withPropsOnChange, lifecycle, withProps, withHandlers, defaultProps, withState } from 'recompose';
+import { compose, lifecycle } from 'recompose';
 import { loadPost as loadPostAction, loadComments as loadCommentsAction } from '../../store/actions'
 import Section from '../styles/Section'
 import Comments from './Comments'

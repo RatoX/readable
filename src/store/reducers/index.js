@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
 const initialState = {
-  ['8xf0y6ziyjabvozdd253nd']: {
+  '8xf0y6ziyjabvozdd253nd': {
   },
-  ['6ni6ok3ym7mf1p33lnez']: {
+  '6ni6ok3ym7mf1p33lnez': {
   }
 }
 
@@ -24,7 +24,7 @@ const initialStateCategories = [
 
 function posts (state = initialState, action) {
   console.log('POSTS TYPE', action.type)
-  const { post } = action
+  const { post, posts } = action
 
   switch (action.type) {
     case 'UPDATE_POST' :
@@ -35,10 +35,10 @@ function posts (state = initialState, action) {
           ...post
         }
       }
-    case 'ADD_POST' :
+    case 'ADD_POSTS' :
       return {
         ...state,
-        [post.id]: post
+        ...posts
       }
     default :
       return state
