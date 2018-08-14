@@ -62,7 +62,7 @@ export function loadPostsFromCategory(type = 'all') {
   };
 }
 
-const vote = (id, option, type = 'posts', cb) => {
+const vote = (id, option, type, cb) => {
   const body = JSON.stringify({ option })
   const headers = {
     'Authorization': TOKEN,
@@ -77,7 +77,7 @@ const vote = (id, option, type = 'posts', cb) => {
 }
 
 const votePost = (id, option) => {
-  return vote(id, option, (dispatch) => (d) => dispatch(receivePost(d)))
+  return vote(id, option, 'posts', (dispatch) => (d) => dispatch(receivePost(d)))
 }
 
 const voteComment = (id, option) => {
