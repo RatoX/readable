@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, withHandlers, defaultProps, withState } from 'recompose';
-import { upVote as upVoteAction, downVote as downVoteAction } from '../../../store/actions'
+import { upVote as upVoteAction, downVote as downVoteAction, deletePost as deletePostAction } from '../../../store/actions'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Section from '../../styles/Section';
@@ -49,8 +49,14 @@ const Score = ItemContainer.withComponent('small').extend`
 
 `
 
-const Title = ItemContainer.withComponent('span').extend`
+const TextAction = ItemContainer.withComponent('span').extend`
+  text-decoration: underline;
 
+  :focus,
+  :hover,
+  :active {
+    color: #204ecf;
+  }
 `
 
 const Date = ItemContainer.withComponent('time').extend`
@@ -84,7 +90,7 @@ const ordering = (by, isAsc) => (x, y) => {
   return `${y[by]}`.localeCompare(`${x[by]}`)
 }
 
-const PostsSection = ({ posts, sortBy, isAsc, sort, vote }) => (
+const PostsSection = ({ posts, sortBy, isAsc, sort, vote, deletePost }) => (
   <Section>
     <h1>all posts, sort by: {sortBy} {isAsc ? 'asc' : 'desc'}</h1>
     <List>
@@ -95,22 +101,26 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, vote }) => (
         <span onClick={sort('timestamp')}>date</span>
         <span onClick={sort('commentCount')}>comments</span>
         <span>category</span>
+        <span></span>
       </ItemHeader>
-    { posts.sort(ordering(sortBy, isAsc)).map((p, index) => (
+      { posts.filter(p => !p.deleted).sort(ordering(sortBy, isAsc)).map((p, index) => (
       <Item key={index} >
         <ItemContainer>
           <VoteButtonAdd onClick={vote(p.id, 'up')}>+</VoteButtonAdd>
           <VoteButtonRemove onClick={vote(p.id, 'down')}>-</VoteButtonRemove>
         </ItemContainer>
         <Score>{ p.voteScore }</Score>
-        <Title>
+        <TextAction>
           <Link to={`/post/${p.id}`}>
             { p.title }
           </Link>
-        </Title>
+        </TextAction>
         <Date>{ p.timestamp }</Date>
         <ItemContainer>{ p.commentCount }</ItemContainer>
         <ItemContainer>{ p.category }</ItemContainer>
+        <TextAction onClick={deletePost(p.id)}>
+          delete
+        </TextAction>
       </Item>
     ))}
     </List>
@@ -121,6 +131,7 @@ function mapDispatchToProps (dispatch) {
   return {
     upVote: (id) => dispatch(upVoteAction(id)),
     downVote: (id) => dispatch(downVoteAction(id)),
+    deletePost: (id) => dispatch(deletePostAction(id)),
   }
 }
 
@@ -148,6 +159,10 @@ export default compose(
       } else if (type === 'down') {
         downVote(id)
       }
+    },
+
+    deletePost: ({ deletePost }) => ( id ) => event => {
+      deletePost(id)
     }
   })
 )(PostsSection)
