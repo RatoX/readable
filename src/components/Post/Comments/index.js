@@ -20,7 +20,7 @@ const Comments = ({ comments }) => (
   <Section>
     <h1>Comments</h1>
     <List>
-      { comments && comments.map((c) => (
+      { comments && comments.sort((c1, c2) => c1.voteScore <= c2.voteScore).map((c) => (
         <Comment
           key={c.id}
           id={c.id}
