@@ -133,3 +133,22 @@ export function addComment(postId, { author, body }) {
       .then((d) => dispatch(receiveComment({ ...comment, ...d })))
   };
 }
+
+export function addPost({ author, body, title, category }) {
+  const post = {
+    id: uuidv4(),
+    timestamp: (new Date()).getTime(),
+    voteScore: 1,
+    body,
+    author,
+    title,
+    category,
+  }
+  const bodyHttp = JSON.stringify(post)
+
+  return function(dispatch) {
+    return fetch(`http://localhost:3001/posts`, { body: bodyHttp, method: 'POST', headers: { 'Authorization': TOKEN } })
+      .then((s) => s.json())
+      .then((d) => dispatch(receivePost({ ...post, ...d })))
+  };
+}

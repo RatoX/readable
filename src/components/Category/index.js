@@ -19,9 +19,10 @@ const Category = ({ type = 'all', posts, categories }) => (
 
 function mapStateToProps (state, { type = 'all' }) {
   const byType = (p) => type === 'all' || p.category === type
+  const shouldHaveId = (p) => p.id
 
   return {
-    posts: Object.values(state.posts).filter(byType),
+    posts: Object.values(state.posts).filter(byType).filter(shouldHaveId),
     categories: state.categories,
     type,
   }

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import Section from '../../styles/Section'
+import PostForm from '../../Post/Form'
 
 const List = styled.ul`
   display: flex;
@@ -36,7 +37,7 @@ const StyledLink = styled(NavLink)`
   }
 `
 
-const CategoriesHeader = ({ categories }) => (
+const CategoriesHeader = ({ categories, category }) => (
   <Section>
     <h1>Categories</h1>
     <List>
@@ -53,6 +54,10 @@ const CategoriesHeader = ({ categories }) => (
         </Item>
       ))}
     </List>
+    <Section>
+      New Post
+      <PostForm />
+    </Section>
   </Section>
 )
 
