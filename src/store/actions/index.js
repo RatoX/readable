@@ -145,9 +145,33 @@ export function addPost({ author, body, title, category }) {
     category,
   }
   const bodyHttp = JSON.stringify(post)
+  const headers = {
+    'Authorization': TOKEN,
+    'Content-Type': 'application/json'
+  }
 
   return function(dispatch) {
-    return fetch(`http://localhost:3001/posts`, { body: bodyHttp, method: 'POST', headers: { 'Authorization': TOKEN } })
+    return fetch(`http://localhost:3001/posts`, { body: bodyHttp, method: 'POST', headers })
+      .then((s) => s.json())
+      .then((d) => dispatch(receivePost({ ...post, ...d })))
+  };
+}
+
+export function editPost({ id, author, body, title, category }) {
+  const post = {
+    author,
+    body,
+    title,
+    category,
+  }
+  const bodyHttp = JSON.stringify(post)
+  const headers = {
+    'Authorization': TOKEN,
+    'Content-Type': 'application/json'
+  }
+
+  return function(dispatch) {
+    return fetch(`http://localhost:3001/posts/${id}`, { body: bodyHttp, method: 'PUT', headers })
       .then((s) => s.json())
       .then((d) => dispatch(receivePost({ ...post, ...d })))
   };

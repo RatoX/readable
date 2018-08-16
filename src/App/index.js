@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import Category from '../components/Category';
 import Post from '../components/Post';
+import PostEdit from '../components/Post/Edit';
 import styled from 'styled-components'
 
 const Main = styled.main`
@@ -27,6 +28,9 @@ class App extends Component {
         )} />
         <Route exact path='/post/:id' render={({ match }) => (
           <Post id={match.params.id}/>
+        )} />
+      <Route exact path='/post/:id/edit' render={({ match }) => (
+          <PostEdit id={match.params.id}/>
         )} />
       </Main>
     );

@@ -38,6 +38,10 @@ const ItemHeader = Item.extend`
   font-weight: bold;
   padding: 15px 0;
   text-transform: uppercase;
+
+  span {
+    cursor: pointer;
+  }
 `
 
 const ItemContainer = styled.span`
@@ -65,7 +69,11 @@ const ordering = (by, isAsc) => (x, y) => {
 
 const PostsSection = ({ posts, sortBy, isAsc, sort, vote, deletePost }) => (
   <Section>
-    <h1>all posts, sort by: {sortBy} {isAsc ? 'asc' : 'desc'}</h1>
+    <h1>
+      all posts, sort by: {sortBy} {isAsc ? 'asc' : 'desc'}
+      <br />
+      <small>click on the columns name to ordering</small>
+    </h1>
     <List>
       <ItemHeader>
         <span>vote</span>
@@ -74,7 +82,7 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, vote, deletePost }) => (
         <span onClick={sort('timestamp')}>date</span>
         <span onClick={sort('commentCount')}>comments</span>
         <span>category</span>
-        <span></span>
+        <span>actions</span>
       </ItemHeader>
       { posts.filter(p => !p.deleted).sort(ordering(sortBy, isAsc)).map((p, index) => (
       <Item key={index} >
@@ -91,9 +99,16 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, vote, deletePost }) => (
         <Date>{ p.timestamp }</Date>
         <ItemContainer>{ p.commentCount }</ItemContainer>
         <ItemContainer>{ p.category }</ItemContainer>
-        <TextAction onClick={deletePost(p.id)}>
-          delete
-        </TextAction>
+        <ItemContainer>
+          <TextAction>
+            <Link to={`/post/${p.id}/edit`}>
+              edit
+            </Link>
+          </TextAction>
+          <TextAction onClick={deletePost(p.id)}>
+            delete
+          </TextAction>
+        </ItemContainer>
       </Item>
     ))}
     </List>

@@ -9,6 +9,8 @@ const List = styled.ul`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  border-bottom: 1px solid #c8c8c8;
+  margin: 20px;
 `
 
 const Item = styled.li`
@@ -30,6 +32,7 @@ const StyledLink = styled(NavLink)`
   width: 100%;
   text-align: center;
   display: block;
+  padding: 10px 0;
 
   &.active {
     background-color: #c8c8c8;
@@ -37,9 +40,13 @@ const StyledLink = styled(NavLink)`
   }
 `
 
+const SectionHeader = styled.h1`
+  text-tranform: uppercase;
+`
+
 const CategoriesHeader = ({ categories, category }) => (
   <Section>
-    <h1>Categories</h1>
+    <SectionHeader>Categories</SectionHeader>
     <List>
       <Item>
         <StyledLink exact to="/">
