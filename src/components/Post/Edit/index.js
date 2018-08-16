@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Section from '../../styles/Section'
@@ -23,5 +24,9 @@ const PostEdit = ({ id }) => (
     </Section>
   </Section>
 )
+
+PostEdit.propTypes = {
+  id: PropTypes.string.required,
+}
 
 export default PostEdit

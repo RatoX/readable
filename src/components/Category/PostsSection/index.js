@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, withHandlers, defaultProps, withState } from 'recompose'
 import { deletePost as deletePostAction } from '../../../store/actions'
@@ -114,6 +115,23 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, deletePost }) => (
   </Section>
 )
 
+PostsSection.propTypes = {
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      voteScore: PropTypes.number,
+      title: PropTypes.string,
+      timestamp: PropTypes.number,
+      commentCount: PropTypes.number,
+      category: PropTypes.string,
+    })
+  ),
+  sortBy: PropTypes.string,
+  isAsc: PropTypes.bool,
+  sort: PropTypes.func,
+  deletePost: PropTypes.func,
+}
+
 function mapDispatchToProps (dispatch) {
   return {
     deletePost: (id) => dispatch(deletePostAction(id)),
@@ -128,7 +146,7 @@ export default compose(
   withState('sortBy', 'setSortBy', 'voteScore'),
   withState('isAsc', 'setIsAsc', true),
   withHandlers({
-    sort: ({ sortBy, isAsc, setSortBy, setIsAsc }) => newSortBy => event => {
+    sort: ({ sortBy, isAsc, setSortBy, setIsAsc }) => newSortBy => () => {
       if (sortBy === newSortBy) {
         setIsAsc(!isAsc)
       } else {
@@ -138,7 +156,7 @@ export default compose(
       setSortBy(newSortBy)
     },
 
-    deletePost: ({ deletePost }) => ( id ) => event => {
+    deletePost: ({ deletePost }) => ( id ) => () => {
       deletePost(id)
     }
   })

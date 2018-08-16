@@ -1,8 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { compose, withHandlers, withState } from 'recompose'
-import { VoteButtonAdd, VoteButtonRemove } from '../../styles/VoteButton'
 import TextAction from '../../styles/TextAction'
 import Vote from '../../Vote'
 import { deleteComment as deleteCommentAction, editComment as editCommentAction } from '../../../store/actions'
@@ -65,6 +65,21 @@ const Comment = ({ id, body, author, newBody, newAuthor, voteScore, editMode, se
   </ListItem>
 )
 
+Comment.propTypes = {
+  id: PropTypes.string,
+  body: PropTypes.string,
+  author: PropTypes.string,
+  voteScore: PropTypes.number,
+  editMode: PropTypes.bool,
+  newBody: PropTypes.string,
+  newAuthor: PropTypes.string,
+  setEditMode: PropTypes.func,
+  setAuthor: PropTypes.func,
+  setBody: PropTypes.func,
+  deleteComment: PropTypes.func,
+  saveComment: PropTypes.func,
+}
+
 function mapDispatchToProps (dispatch) {
   return {
     deleteComment: (id) => dispatch(deleteCommentAction(id)),
@@ -78,11 +93,11 @@ export default compose(
   withState('newBody', 'setBody', ({ body }) => body),
   withState('newAuthor', 'setAuthor', ({ author }) => author),
   withHandlers({
-    deleteComment: ({ deleteComment }) => ( id ) => event => {
+    deleteComment: ({ deleteComment }) => ( id ) => () => {
       deleteComment(id)
     },
 
-    saveComment: ({ newAuthor, newBody, setEditMode, editComment }) => ( id ) => event => {
+    saveComment: ({ newAuthor, newBody, setEditMode, editComment }) => ( id ) => () => {
       editComment({
         id,
         author: newAuthor,

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import Section from '../../styles/Section'
@@ -44,7 +45,7 @@ const SectionHeader = styled.h1`
   text-tranform: uppercase;
 `
 
-const CategoriesHeader = ({ categories, category }) => (
+const CategoriesHeader = ({ categories }) => (
   <Section>
     <SectionHeader>Categories</SectionHeader>
     <List>
@@ -67,5 +68,14 @@ const CategoriesHeader = ({ categories, category }) => (
     </Section>
   </Section>
 )
+
+CategoriesHeader.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      path: PropTypes.string
+    })
+  ),
+}
 
 export default CategoriesHeader

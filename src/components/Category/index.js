@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, lifecycle } from 'recompose'
 import CategoriesHeader from './CategoriesHeader'
@@ -6,7 +7,7 @@ import PostsSection from './PostsSection'
 import Section from '../styles/Section'
 import { loadPostsFromCategory as loadPostsFromCategoryAction } from '../../store/actions'
 
-const Category = ({ type = 'all', posts, categories }) => (
+const Category = ({ posts, categories }) => (
   <Section>
     <CategoriesHeader
       categories={categories}
@@ -16,6 +17,11 @@ const Category = ({ type = 'all', posts, categories }) => (
     />
   </Section>
 )
+
+Category.propTypes = {
+  posts: PropTypes.array,
+  categories: PropTypes.array,
+}
 
 function mapStateToProps (state, { type = 'all' }) {
   const byType = (p) => type === 'all' || p.category === type

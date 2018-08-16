@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Section from '../../styles/Section'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -45,7 +46,31 @@ const Form = ({ id, author, title, body, categories, category, showActionButton,
   </Section>
 )
 
-function mapStateToProps (state, { type = 'all' }) {
+
+Form.propTypes = {
+  id: PropTypes.string,
+  author: PropTypes.string,
+  title: PropTypes.string,
+  body: PropTypes.string,
+  categories: PropTypes.array,
+  category: PropTypes.string,
+  showActionButton: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
+  setCategory: PropTypes.func,
+  setAuthor: PropTypes.func,
+  setTitle: PropTypes.func,
+  setBody: PropTypes.func,
+  addPost: PropTypes.func,
+  editPost: PropTypes.func,
+}
+
+Form.defaultProps = {
+  showActionButton: false,
+}
+
+function mapStateToProps (state) {
   return {
     categories: state.categories.map((c) => c.name),
   }
@@ -66,6 +91,14 @@ export default compose(
   withState('title', 'setTitle', ''),
   withState('body', 'setBody', ''),
   withState('category', 'setCategory', ''),
+  withProps((props) => {
+    const { author, title, body, category, history } = props
+
+    return {
+      showActionButton: author.trim() && category.trim() && title.trim() && body.trim(),
+      backToHome: () => history.push('/'),
+    }
+  }),
   lifecycle({
     componentDidMount() {
       const { id, loadPost, setAuthor, setTitle, setCategory, setBody } = this.props
@@ -83,16 +116,8 @@ export default compose(
       }
     }
   }),
-  withProps((props) => {
-    const { author, title, body, category, history } = props
-
-    return {
-      showActionButton: author.trim() && category.trim() && title.trim() && body.trim(),
-      backToHome: () => history.push('/'),
-    }
-  }),
   withStateHandlers({}, {
-    cleanData: ({ title, body, author, category}) => () => ({
+    cleanData: () => () => ({
       title: '',
       author: '',
       category: '',
@@ -100,12 +125,12 @@ export default compose(
     }),
   }),
   withHandlers({
-    addPost: ({ author, body, title, category, cleanData, addPost }) => () => event => {
+    addPost: ({ author, body, title, category, cleanData, addPost }) => () => () => {
       addPost({ author, body, title, category })
       cleanData()
     },
 
-    editPost: ({ author, body, title, category, cleanData, editPost, backToHome }) => (id) => event => {
+    editPost: ({ author, body, title, category, cleanData, editPost, backToHome }) => (id) => () => {
       editPost({ id, author, body, title, category })
       cleanData()
       backToHome()

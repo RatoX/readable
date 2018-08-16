@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { compose, lifecycle } from 'recompose'
@@ -40,6 +41,17 @@ const Post = ({ id, title, body, author, commentCount, comments, voteScore }) =>
     <Comments postId={id} comments={comments} />
   </Section>
 )
+
+
+Post.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
+  body: PropTypes.string,
+  author: PropTypes.string,
+  commentCount: PropTypes.number,
+  comments: PropTypes.array,
+  voteScore: PropTypes.number,
+}
 
 function mapDispatchToProps (dispatch) {
   return {

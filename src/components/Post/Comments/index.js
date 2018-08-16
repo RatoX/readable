@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Section from '../../styles/Section'
 import Comment from '../Comment'
@@ -50,6 +51,16 @@ const Comments = ({ postId, comments, author, body, setAuthor, setBody, addComme
   </Section>
 )
 
+Comments.propTypes = {
+  postId: PropTypes.string,
+  comments: PropTypes.array,
+  author: PropTypes.string,
+  body: PropTypes.string,
+  setAuthor: PropTypes.func,
+  setBody: PropTypes.func,
+  addComment: PropTypes.func,
+}
+
 function mapDispatchToProps (dispatch) {
   return {
     addComment: (postId, { author, body }) => dispatch(addCommentAction(postId, { author, body })),
@@ -61,7 +72,7 @@ export default compose(
   withState('author', 'setAuthor', ''),
   withState('body', 'setBody', ''),
   withHandlers({
-    addComment: ({ addComment, author, body, setAuthor, setBody }) => (postId) => event => {
+    addComment: ({ addComment, author, body, setAuthor, setBody }) => (postId) => () => {
       addComment(postId, { author, body })
       setAuthor('')
       setBody('')

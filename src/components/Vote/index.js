@@ -1,9 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, withHandlers } from 'recompose'
 import { upVotePost as upVotePostAction, downVotePost as downVotePostAction, upVoteComment as upVoteCommentAction, downVoteComment as downVoteCommentAction } from '../../store/actions'
 import styled from 'styled-components'
-import Section from '../styles/Section'
 import { VoteButtonAdd, VoteButtonRemove } from '../styles/VoteButton'
 
 const ItemContainer = styled.span`
@@ -20,6 +20,12 @@ const Vote = ({ id, type = 'post', vote }) => (
   </ItemContainer>
 )
 
+Vote.propTypes = {
+  id: PropTypes.string,
+  type: PropTypes.string,
+  vote: PropTypes.func,
+}
+
 function mapDispatchToProps (dispatch) {
   return {
     upVotePost: (id) => dispatch(upVotePostAction(id)),
@@ -32,7 +38,7 @@ function mapDispatchToProps (dispatch) {
 export default compose(
   connect(() => ({}), mapDispatchToProps),
   withHandlers({
-    vote: ({ upVotePost, upVoteComment, downVotePost, downVoteComment }) => ( id, direction, type ) => event => {
+    vote: ({ upVotePost, upVoteComment, downVotePost, downVoteComment }) => ( id, direction, type ) => () => {
       const upVote = type === 'post' ? upVotePost : upVoteComment
       const downVote = type === 'post' ? downVotePost : downVoteComment
 
