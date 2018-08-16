@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { loadPost as loadPostAction, loadComments as loadCommentsAction } from '../../store/actions'
 import Section from '../styles/Section'
 import Comments from './Comments'
+import Vote from '../Vote'
 
 const Information = Section.extend`
   background-color: #fafafa;
@@ -18,7 +19,7 @@ const Body = styled.p`
   margin: 15px 0;
 `
 
-const Post = ({ id, title, body, author, commentCount, comments }) => (
+const Post = ({ id, title, body, author, commentCount, comments, voteScore }) => (
   <Section>
     <Link to="/">
       {'<'} Back
@@ -30,6 +31,10 @@ const Post = ({ id, title, body, author, commentCount, comments }) => (
       </Body>
       <small>
         { commentCount } comment(s)
+      </small>
+      <small>
+        { voteScore } total of votes
+        <Vote postId={id} />
       </small>
     </Information>
     <Comments postId={id} comments={ comments } />
@@ -53,6 +58,7 @@ function mapStateToProps (state, props) {
     body: post.body,
     author: post.author,
     commentCount: post.commentCount,
+    voteScore: post.voteScore,
     comments: Object.values(post.comments || {}),
   }
 }

@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, withHandlers, defaultProps, withState } from 'recompose';
-import { upVotePost as upVoteAction, downVotePost as downVoteAction, deletePost as deletePostAction } from '../../../store/actions'
+import { deletePost as deletePostAction } from '../../../store/actions'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Section from '../../styles/Section';
-import { VoteButtonAdd, VoteButtonRemove } from '../../styles/VoteButton';
+import Vote from '../../Vote';
 import TextAction from '../../styles/TextAction';
 
 const List = styled.ol`
@@ -67,7 +67,7 @@ const ordering = (by, isAsc) => (x, y) => {
   return `${y[by]}`.localeCompare(`${x[by]}`)
 }
 
-const PostsSection = ({ posts, sortBy, isAsc, sort, vote, deletePost }) => (
+const PostsSection = ({ posts, sortBy, isAsc, sort, deletePost }) => (
   <Section>
     <h1>
       all posts, sort by: {sortBy} {isAsc ? 'asc' : 'desc'}
@@ -87,8 +87,7 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, vote, deletePost }) => (
       { posts.filter(p => !p.deleted).sort(ordering(sortBy, isAsc)).map((p, index) => (
       <Item key={index} >
         <ItemContainer>
-          <VoteButtonAdd onClick={vote(p.id, 'up')}>+</VoteButtonAdd>
-          <VoteButtonRemove onClick={vote(p.id, 'down')}>-</VoteButtonRemove>
+          <Vote postId={p.id} />
         </ItemContainer>
         <Score>{ p.voteScore }</Score>
         <TextAction>
@@ -117,8 +116,6 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, vote, deletePost }) => (
 
 function mapDispatchToProps (dispatch) {
   return {
-    upVote: (id) => dispatch(upVoteAction(id)),
-    downVote: (id) => dispatch(downVoteAction(id)),
     deletePost: (id) => dispatch(deletePostAction(id)),
   }
 }
@@ -139,14 +136,6 @@ export default compose(
       }
 
       setSortBy(newSortBy)
-    },
-
-    vote: ({ upVote, downVote }) => ( id, type ) => event => {
-      if (type === 'up') {
-        upVote(id)
-      } else if (type === 'down') {
-        downVote(id)
-      }
     },
 
     deletePost: ({ deletePost }) => ( id ) => event => {
