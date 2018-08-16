@@ -34,7 +34,7 @@ export default compose(
   withHandlers({
     vote: ({ upVotePost, upVoteComment, downVotePost, downVoteComment }) => ( id, direction, type ) => event => {
       const upVote = type === 'post' ? upVotePost : upVoteComment
-      const downVote = type === 'post' ? downVote : downVoteComment
+      const downVote = type === 'post' ? downVotePost : downVoteComment
 
       if (direction === 'up') {
         upVote(id)
