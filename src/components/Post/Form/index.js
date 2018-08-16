@@ -33,7 +33,7 @@ const Form = ({ author, title, body, categories, category, setCategory, setAutho
     <label htmlFor="body">Body</label>
     <textarea id="body" cols="30" rows="10" onChange={(e) => setBody(e.target.value)}></textarea>
     <button disabled={ !author.trim() || !category.trim()|| !title.trim() || !body.trim() } onClick={addPost()}>
-      add comment
+      create new post
     </button>
   </Section>
 )
