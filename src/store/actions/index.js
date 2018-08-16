@@ -176,3 +176,21 @@ export function editPost({ id, author, body, title, category }) {
       .then((d) => dispatch(receivePost({ ...post, ...d })))
   };
 }
+
+export function editComment({ id, author, body }) {
+  const post = {
+    author,
+    body,
+  }
+  const bodyHttp = JSON.stringify(post)
+  const headers = {
+    'Authorization': TOKEN,
+    'Content-Type': 'application/json'
+  }
+
+  return function(dispatch) {
+    return fetch(`http://localhost:3001/comments/${id}`, { body: bodyHttp, method: 'PUT', headers })
+      .then((s) => s.json())
+      .then((d) => dispatch(receiveComment({ ...post, ...d })))
+  };
+}
