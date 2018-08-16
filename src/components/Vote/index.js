@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { compose, withHandlers, defaultProps, withState } from 'recompose';
+import { compose, withHandlers } from 'recompose';
 import { upVotePost as upVotePostAction, downVotePost as downVotePostAction, upVoteComment as upVoteCommentAction, downVoteComment as downVoteCommentAction } from '../../store/actions'
 import styled from 'styled-components'
 import Section from '../styles/Section';
