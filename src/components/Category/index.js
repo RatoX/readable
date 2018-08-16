@@ -1,19 +1,19 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
-import CategoriesHeader from './CategoriesHeader';
-import PostsSection from './PostsSection';
-import Section from '../styles/Section';
+import React from 'react'
+import { connect } from 'react-redux'
+import { compose, lifecycle } from 'recompose'
+import CategoriesHeader from './CategoriesHeader'
+import PostsSection from './PostsSection'
+import Section from '../styles/Section'
 import { loadPostsFromCategory as loadPostsFromCategoryAction } from '../../store/actions'
 
 const Category = ({ type = 'all', posts, categories }) => (
   <Section>
     <CategoriesHeader
       categories={categories}
-      />
+    />
     <PostsSection
       posts={posts}
-      />
+    />
   </Section>
 )
 

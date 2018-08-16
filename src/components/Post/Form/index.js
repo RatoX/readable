@@ -13,15 +13,15 @@ const SectionInline = Section.extend`
 const Form = ({ id, author, title, body, categories, category, showActionButton, setCategory, setAuthor, setTitle, setBody, addPost, editPost }) => (
   <Section>
     <SectionInline>
-      <label htmlFor="title">Title: </label>
-      <input id="title" type="text" onChange={(e) => setTitle(e.target.value)} value={title} />
+      <label htmlFor='title'>Title: </label>
+      <input id='title' type='text' onChange={(e) => setTitle(e.target.value)} value={title} />
     </SectionInline>
     <SectionInline>
-      <label htmlFor="author">Author: </label>
-      <input id="author" type="text" onChange={(e) => setAuthor(e.target.value)} value={author} />
+      <label htmlFor='author'>Author: </label>
+      <input id='author' type='text' onChange={(e) => setAuthor(e.target.value)} value={author} />
     </SectionInline>
     <SectionInline>
-      <label htmlFor="category">Category: </label>
+      <label htmlFor='category'>Category: </label>
       <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option value=''>----- select -----</option>
         {categories.map((c, i) => (
@@ -30,15 +30,15 @@ const Form = ({ id, author, title, body, categories, category, showActionButton,
       </select>
     </SectionInline>
 
-    <label htmlFor="body">Body</label>
-    <textarea id="body" cols="30" rows="10" onChange={(e) => setBody(e.target.value)} value={body}></textarea>
+    <label htmlFor='body'>Body</label>
+    <textarea id='body' cols='30' rows='10' onChange={(e) => setBody(e.target.value)} value={body} />
     { !id && (
-      <button disabled={ !showActionButton } onClick={addPost()}>
+      <button disabled={!showActionButton} onClick={addPost()}>
         create new post
       </button>
     )}
     { id && (
-      <button disabled={ !showActionButton } onClick={editPost(id)}>
+      <button disabled={!showActionButton} onClick={editPost(id)}>
         edit post
       </button>
     )}

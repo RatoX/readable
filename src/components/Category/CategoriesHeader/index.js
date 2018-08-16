@@ -49,7 +49,7 @@ const CategoriesHeader = ({ categories, category }) => (
     <SectionHeader>Categories</SectionHeader>
     <List>
       <Item>
-        <StyledLink exact to="/">
+        <StyledLink exact to='/'>
           all
         </StyledLink>
       </Item>

@@ -41,7 +41,7 @@ export function loadPost(id) {
     return fetch(`http://localhost:3001/posts/${id}`, { headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
       .then((d) => dispatch(receivePost(d)))
-  };
+  }
 }
 
 export function loadComments(id) {
@@ -49,7 +49,7 @@ export function loadComments(id) {
     return fetch(`http://localhost:3001/posts/${id}/comments`, { headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
       .then((d) => dispatch(receivePostComments(id, d)))
-  };
+  }
 }
 
 export function loadPostsFromCategory(type = 'all') {
@@ -59,7 +59,7 @@ export function loadPostsFromCategory(type = 'all') {
     return fetch(`http://localhost:3001${path}`, { headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
       .then((d) => dispatch(receivePosts(d)))
-  };
+  }
 }
 
 const vote = (id, option, type, cb) => {
@@ -73,7 +73,7 @@ const vote = (id, option, type, cb) => {
     return fetch(`http://localhost:3001/${type}/${id}`, { body, method: 'POST', headers })
       .then((s) => s.json())
       .then(cb(dispatch))
-  };
+  }
 }
 
 const votePost = (id, option) => {
@@ -97,7 +97,7 @@ export function deletePost(id) {
     return fetch(`http://localhost:3001/posts/${id}`, { method: 'DELETE', headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
       .then((d) => dispatch(receivePost(d)))
-  };
+  }
 }
 
 export function upVoteComment(id) {
@@ -113,7 +113,7 @@ export function deleteComment(id) {
     return fetch(`http://localhost:3001/comments/${id}`, { method: 'DELETE', headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
       .then((d) => dispatch(receiveComment(d)))
-  };
+  }
 }
 
 export function addComment(postId, { author, body }) {
@@ -128,10 +128,10 @@ export function addComment(postId, { author, body }) {
   const bodyHttp = JSON.stringify(comment)
 
   return function(dispatch) {
-    return fetch(`http://localhost:3001/comments`, { body: bodyHttp, method: 'POST', headers: { 'Authorization': TOKEN } })
+    return fetch('http://localhost:3001/comments', { body: bodyHttp, method: 'POST', headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
       .then((d) => dispatch(receiveComment({ ...comment, ...d })))
-  };
+  }
 }
 
 export function addPost({ author, body, title, category }) {
@@ -151,10 +151,10 @@ export function addPost({ author, body, title, category }) {
   }
 
   return function(dispatch) {
-    return fetch(`http://localhost:3001/posts`, { body: bodyHttp, method: 'POST', headers })
+    return fetch('http://localhost:3001/posts', { body: bodyHttp, method: 'POST', headers })
       .then((s) => s.json())
       .then((d) => dispatch(receivePost({ ...post, ...d })))
-  };
+  }
 }
 
 export function editPost({ id, author, body, title, category }) {
@@ -174,7 +174,7 @@ export function editPost({ id, author, body, title, category }) {
     return fetch(`http://localhost:3001/posts/${id}`, { body: bodyHttp, method: 'PUT', headers })
       .then((s) => s.json())
       .then((d) => dispatch(receivePost({ ...post, ...d })))
-  };
+  }
 }
 
 export function editComment({ id, author, body }) {
@@ -192,5 +192,5 @@ export function editComment({ id, author, body }) {
     return fetch(`http://localhost:3001/comments/${id}`, { body: bodyHttp, method: 'PUT', headers })
       .then((s) => s.json())
       .then((d) => dispatch(receiveComment({ ...post, ...d })))
-  };
+  }
 }

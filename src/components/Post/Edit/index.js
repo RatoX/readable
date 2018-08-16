@@ -11,7 +11,7 @@ const SectionHeader = styled.h1`
 
 const PostEdit = ({ id }) => (
   <Section>
-    <Link to="/">
+    <Link to='/'>
       {'<'} Back
     </Link>
     <SectionHeader>Edit Post</SectionHeader>

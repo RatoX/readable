@@ -39,13 +39,13 @@ const Comment = ({ id, body, author, newBody, newAuthor, voteScore, editMode, se
           <Votes>{ voteScore } votes</Votes>
           <textarea value={newBody} onChange={(e) => setBody(e.target.value)} />
           <Author>by
-            <input type="text" value={newAuthor} onChange={(e) => setAuthor(e.target.value)} />
+            <input type='text' value={newAuthor} onChange={(e) => setAuthor(e.target.value)} />
           </Author>
         </React.Fragment>
       )}
     </section>
     <VoteButtons>
-      <Vote id={id} type="comment" />
+      <Vote id={id} type='comment' />
     </VoteButtons>
     { !editMode && (
       <React.Fragment>

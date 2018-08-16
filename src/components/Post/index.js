@@ -1,7 +1,7 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { compose, lifecycle } from 'recompose';
+import { compose, lifecycle } from 'recompose'
 import { Link } from 'react-router-dom'
 import { loadPost as loadPostAction, loadComments as loadCommentsAction } from '../../store/actions'
 import Section from '../styles/Section'
@@ -21,7 +21,7 @@ const Body = styled.p`
 
 const Post = ({ id, title, body, author, commentCount, comments, voteScore }) => (
   <Section>
-    <Link to="/">
+    <Link to='/'>
       {'<'} Back
     </Link>
     <Information>
@@ -37,7 +37,7 @@ const Post = ({ id, title, body, author, commentCount, comments, voteScore }) =>
         <Vote id={id} />
       </small>
     </Information>
-    <Comments postId={id} comments={ comments } />
+    <Comments postId={id} comments={comments} />
   </Section>
 )
 

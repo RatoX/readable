@@ -1,10 +1,10 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { compose, withHandlers } from 'recompose';
+import React from 'react'
+import { connect } from 'react-redux'
+import { compose, withHandlers } from 'recompose'
 import { upVotePost as upVotePostAction, downVotePost as downVotePostAction, upVoteComment as upVoteCommentAction, downVoteComment as downVoteCommentAction } from '../../store/actions'
 import styled from 'styled-components'
-import Section from '../styles/Section';
-import { VoteButtonAdd, VoteButtonRemove } from '../styles/VoteButton';
+import Section from '../styles/Section'
+import { VoteButtonAdd, VoteButtonRemove } from '../styles/VoteButton'
 
 const ItemContainer = styled.span`
   display: flex;

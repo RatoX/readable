@@ -1,12 +1,12 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { compose, withHandlers, defaultProps, withState } from 'recompose';
+import React from 'react'
+import { connect } from 'react-redux'
+import { compose, withHandlers, defaultProps, withState } from 'recompose'
 import { deletePost as deletePostAction } from '../../../store/actions'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import Section from '../../styles/Section';
-import Vote from '../../Vote';
-import TextAction from '../../styles/TextAction';
+import Section from '../../styles/Section'
+import Vote from '../../Vote'
+import TextAction from '../../styles/TextAction'
 
 const List = styled.ol`
   display: flex;
@@ -85,31 +85,31 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, deletePost }) => (
         <span>actions</span>
       </ItemHeader>
       { posts.filter(p => !p.deleted).sort(ordering(sortBy, isAsc)).map((p, index) => (
-      <Item key={index} >
-        <ItemContainer>
-          <Vote id={p.id} />
-        </ItemContainer>
-        <Score>{ p.voteScore }</Score>
-        <TextAction>
-          <Link to={`/post/${p.id}`}>
-            { p.title }
-          </Link>
-        </TextAction>
-        <Date>{ p.timestamp }</Date>
-        <ItemContainer>{ p.commentCount }</ItemContainer>
-        <ItemContainer>{ p.category }</ItemContainer>
-        <ItemContainer>
+        <Item key={index} >
+          <ItemContainer>
+            <Vote id={p.id} />
+          </ItemContainer>
+          <Score>{ p.voteScore }</Score>
           <TextAction>
-            <Link to={`/post/${p.id}/edit`}>
-              edit
+            <Link to={`/post/${p.id}`}>
+              { p.title }
             </Link>
           </TextAction>
-          <TextAction onClick={deletePost(p.id)}>
+          <Date>{ p.timestamp }</Date>
+          <ItemContainer>{ p.commentCount }</ItemContainer>
+          <ItemContainer>{ p.category }</ItemContainer>
+          <ItemContainer>
+            <TextAction>
+              <Link to={`/post/${p.id}/edit`}>
+              edit
+              </Link>
+            </TextAction>
+            <TextAction onClick={deletePost(p.id)}>
             delete
-          </TextAction>
-        </ItemContainer>
-      </Item>
-    ))}
+            </TextAction>
+          </ItemContainer>
+        </Item>
+      ))}
     </List>
   </Section>
 )

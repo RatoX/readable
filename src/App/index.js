@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import Category from '../components/Category';
-import Post from '../components/Post';
-import PostEdit from '../components/Post/Edit';
+import React, { Component } from 'react'
+import { Route, Switch } from 'react-router-dom'
+import Category from '../components/Category'
+import Post from '../components/Post'
+import PostEdit from '../components/Post/Edit'
 import ErrorPageBoundary from '../components/ErrorPageBoundary'
 import styled from 'styled-components'
 
@@ -27,13 +27,13 @@ class App extends Component {
               <Category />
             )} />
             <Route exact path='/category/:name' render={({ match }) => (
-              <Category type={match.params.name}/>
+              <Category type={match.params.name} />
             )} />
             <Route exact path='/post/:id' render={({ match }) => (
-              <Post id={match.params.id}/>
+              <Post id={match.params.id} />
             )} />
             <Route exact path='/post/:id/edit' render={({ match }) => (
-              <PostEdit id={match.params.id}/>
+              <PostEdit id={match.params.id} />
             )} />
             <Route render={() => (
               <span> PAGE NOT FOUND 404 </span>
@@ -41,8 +41,8 @@ class App extends Component {
           </Switch>
         </ErrorPageBoundary>
       </Main>
-    );
+    )
   }
 }
 
-export default App;
+export default App
