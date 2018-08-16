@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { compose, withHandlers } from 'recompose'
 import { VoteButtonAdd, VoteButtonRemove } from '../../styles/VoteButton'
 import TextAction from '../../styles/TextAction'
-import { upVoteComment as upVoteAction, downVoteComment as downVoteAction, deleteComment as deleteCommentAction } from '../../../store/actions'
+import Vote from '../../Vote'
+import { deleteComment as deleteCommentAction } from '../../../store/actions'
 
 const ListItem = styled.li`
   width: 100%;
@@ -25,14 +26,13 @@ const VoteButtons = styled.section`
   margin-left: auto;
 `
 
-const Comment = ({ id, body, author, voteScore, vote, deleteComment }) => (
+const Comment = ({ id, body, author, voteScore, deleteComment }) => (
   <ListItem>
     <section>
       <Votes>{ voteScore } votes</Votes> {body} <Author>by {author}</Author>
     </section>
     <VoteButtons>
-      <VoteButtonAdd onClick={vote(id, 'up')}>+</VoteButtonAdd>
-      <VoteButtonRemove onClick={vote(id, 'down')}>-</VoteButtonRemove>
+      <Vote id={id} type="comment" />
     </VoteButtons>
     <TextAction onClick={deleteComment(id)}>
       delete
@@ -42,8 +42,6 @@ const Comment = ({ id, body, author, voteScore, vote, deleteComment }) => (
 
 function mapDispatchToProps (dispatch) {
   return {
-    upVote: (id) => dispatch(upVoteAction(id)),
-    downVote: (id) => dispatch(downVoteAction(id)),
     deleteComment: (id) => dispatch(deleteCommentAction(id)),
   }
 }
@@ -51,14 +49,6 @@ function mapDispatchToProps (dispatch) {
 export default compose(
   connect(() => ({}), mapDispatchToProps),
   withHandlers({
-    vote: ({ upVote, downVote }) => ( id, type ) => event => {
-      if (type === 'up') {
-        upVote(id)
-      } else if (type === 'down') {
-        downVote(id)
-      }
-    },
-
     deleteComment: ({ deleteComment }) => ( id ) => event => {
       deleteComment(id)
     },

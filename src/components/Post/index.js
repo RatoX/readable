@@ -34,7 +34,7 @@ const Post = ({ id, title, body, author, commentCount, comments, voteScore }) =>
       </small>
       <small>
         { voteScore } total of votes
-        <Vote postId={id} />
+        <Vote id={id} />
       </small>
     </Information>
     <Comments postId={id} comments={ comments } />

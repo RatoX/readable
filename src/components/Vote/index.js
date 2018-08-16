@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, withHandlers, defaultProps, withState } from 'recompose';
-import { upVotePost as upVoteAction, downVotePost as downVoteAction } from '../../store/actions'
+import { upVotePost as upVotePostAction, downVotePost as downVotePostAction, upVoteComment as upVoteCommentAction, downVoteComment as downVoteCommentAction } from '../../store/actions'
 import styled from 'styled-components'
 import Section from '../styles/Section';
 import { VoteButtonAdd, VoteButtonRemove } from '../styles/VoteButton';
@@ -13,27 +13,32 @@ const ItemContainer = styled.span`
   flex: 1;
 `
 
-const Vote = ({ postId, vote }) => (
+const Vote = ({ id, type = 'post', vote }) => (
   <ItemContainer>
-    <VoteButtonAdd onClick={vote(postId, 'up')}>+</VoteButtonAdd>
-    <VoteButtonRemove onClick={vote(postId, 'down')}>-</VoteButtonRemove>
+    <VoteButtonAdd onClick={vote(id, 'up', type)}>+</VoteButtonAdd>
+    <VoteButtonRemove onClick={vote(id, 'down', type)}>-</VoteButtonRemove>
   </ItemContainer>
 )
 
 function mapDispatchToProps (dispatch) {
   return {
-    upVote: (id) => dispatch(upVoteAction(id)),
-    downVote: (id) => dispatch(downVoteAction(id)),
+    upVotePost: (id) => dispatch(upVotePostAction(id)),
+    downVotePost: (id) => dispatch(downVotePostAction(id)),
+    upVoteComment: (id) => dispatch(upVoteCommentAction(id)),
+    downVoteComment: (id) => dispatch(downVoteCommentAction(id)),
   }
 }
 
 export default compose(
   connect(() => ({}), mapDispatchToProps),
   withHandlers({
-    vote: ({ upVote, downVote }) => ( id, type ) => event => {
-      if (type === 'up') {
+    vote: ({ upVotePost, upVoteComment, downVotePost, downVoteComment }) => ( id, direction, type ) => event => {
+      const upVote = type === 'post' ? upVotePost : upVoteComment
+      const downVote = type === 'post' ? downVote : downVoteComment
+
+      if (direction === 'up') {
         upVote(id)
-      } else if (type === 'down') {
+      } else if (direction === 'down') {
         downVote(id)
       }
     },

@@ -87,7 +87,7 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, deletePost }) => (
       { posts.filter(p => !p.deleted).sort(ordering(sortBy, isAsc)).map((p, index) => (
       <Item key={index} >
         <ItemContainer>
-          <Vote postId={p.id} />
+          <Vote id={p.id} />
         </ItemContainer>
         <Score>{ p.voteScore }</Score>
         <TextAction>
