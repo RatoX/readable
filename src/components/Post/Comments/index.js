@@ -40,10 +40,10 @@ const Comments = ({ postId, comments, author, body, setAuthor, setBody, addComme
     </List>
     <Footer>
       <label htmlFor='author'>Author</label>
-      <input id='author' type='text' onChange={(e) => setAuthor(e.target.value)} />
+      <input id='author' type='text' value={author} onChange={(e) => setAuthor(e.target.value)} />
 
       <label htmlFor='body'>Comment</label>
-      <textarea id='body' cols='30' rows='10' onChange={(e) => setBody(e.target.value)} />
+      <textarea id='body' cols='30' rows='10' value={body} onChange={(e) => setBody(e.target.value)} />
       <button disabled={!author.trim() || !body.trim()} onClick={addComment(postId)}>
         add comment
       </button>
