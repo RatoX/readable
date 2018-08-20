@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { compose, lifecycle, withHandlers, withProps } from 'recompose'
-import { Link, withRouter } from 'react-router-dom'
-import { deletePost as deletePostAction, loadPost as loadPostAction, loadComments as loadCommentsAction } from '../../store/actions'
+import { compose, lifecycle } from 'recompose'
+import { Link } from 'react-router-dom'
+import { loadPost as loadPostAction, loadComments as loadCommentsAction } from '../../store/actions'
 import Section from '../styles/Section'
-import TextAction from '../styles/TextAction'
 import Comments from './Comments'
+import Actions from './Actions'
 import Vote from '../Vote'
 
 const Information = Section.extend`
@@ -21,7 +21,7 @@ const Body = styled.p`
   margin: 15px 0;
 `
 
-const Post = ({ id, title, body, author, commentCount, comments, voteScore, deletePost }) => (
+const Post = ({ id, title, body, author, commentCount, comments, voteScore }) => (
   <Section>
     <Link to='/'>
       {'<'} Back
@@ -41,14 +41,7 @@ const Post = ({ id, title, body, author, commentCount, comments, voteScore, dele
     </Information>
     <Comments postId={id} comments={comments} />
     <Section>
-      <TextAction>
-        <Link to={`/post/${id}/edit`}>
-          edit
-        </Link>
-      </TextAction>
-      <TextAction onClick={deletePost(id)}>
-        delete
-      </TextAction>
+      <Actions id={id} />
     </Section>
   </Section>
 )
@@ -62,14 +55,12 @@ Post.propTypes = {
   commentCount: PropTypes.number,
   comments: PropTypes.array,
   voteScore: PropTypes.number,
-  deletePost: PropTypes.func,
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     loadPost: (id) => dispatch(loadPostAction(id)),
     loadComments: (id) => dispatch(loadCommentsAction(id)),
-    deletePost: (id) => dispatch(deletePostAction(id)),
   }
 }
 
@@ -89,23 +80,13 @@ function mapStateToProps (state, props) {
 }
 
 export default compose(
-  withRouter,
   connect(mapStateToProps, mapDispatchToProps),
-  withProps((props) => ({
-    backToHome: () => props.history.push('/'),
-  })),
   lifecycle({
     componentDidMount() {
       const { id, loadPost, loadComments } = this.props
 
       loadPost(id)
       loadComments(id)
-    }
-  }),
-  withHandlers({
-    deletePost: ({ deletePost, backToHome }) => ( id ) => () => {
-      deletePost(id)
-      backToHome()
     }
   })
 )(Post)

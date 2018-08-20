@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { compose, withHandlers, defaultProps, withState } from 'recompose'
-import { deletePost as deletePostAction } from '../../../store/actions'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Section from '../../styles/Section'
 import Vote from '../../Vote'
 import TextAction from '../../styles/TextAction'
+import Actions from '../../Post/Actions'
 
 const List = styled.ol`
   display: flex;
@@ -68,7 +67,7 @@ const ordering = (by, isAsc) => (x, y) => {
   return `${y[by]}`.localeCompare(`${x[by]}`)
 }
 
-const PostsSection = ({ posts, sortBy, isAsc, sort, deletePost }) => (
+const PostsSection = ({ posts, sortBy, isAsc, sort }) => (
   <Section>
     <h1>
       all posts, sort by: {sortBy} {isAsc ? 'asc' : 'desc'}
@@ -100,14 +99,7 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, deletePost }) => (
           <ItemContainer>{ p.commentCount }</ItemContainer>
           <ItemContainer>{ p.category }</ItemContainer>
           <ItemContainer>
-            <TextAction>
-              <Link to={`/post/${p.id}/edit`}>
-              edit
-              </Link>
-            </TextAction>
-            <TextAction onClick={deletePost(p.id)}>
-              delete
-            </TextAction>
+            <Actions id={p.id} />
           </ItemContainer>
         </Item>
       ))}
@@ -129,17 +121,9 @@ PostsSection.propTypes = {
   sortBy: PropTypes.string,
   isAsc: PropTypes.bool,
   sort: PropTypes.func,
-  deletePost: PropTypes.func,
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    deletePost: (id) => dispatch(deletePostAction(id)),
-  }
 }
 
 export default compose(
-  connect(() => ({}), mapDispatchToProps),
   defaultProps({
     posts: [],
   }),
@@ -155,9 +139,5 @@ export default compose(
 
       setSortBy(newSortBy)
     },
-
-    deletePost: ({ deletePost }) => ( id ) => () => {
-      deletePost(id)
-    }
   })
 )(PostsSection)
