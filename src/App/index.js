@@ -26,10 +26,10 @@ class App extends Component {
             <Route exact path='/' render={() => (
               <Category />
             )} />
-            <Route exact path='/category/:name' render={({ match }) => (
+            <Route exact path='/category/type/:name' render={({ match }) => (
               <Category type={match.params.name} />
             )} />
-            <Route exact path='/post/:id' render={({ match }) => (
+            <Route exact path='/category/:id' render={({ match }) => (
               <Post id={match.params.id} />
             )} />
             <Route exact path='/post/:id/edit' render={({ match }) => (

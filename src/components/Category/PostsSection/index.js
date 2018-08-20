@@ -92,7 +92,7 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, deletePost }) => (
           </ItemContainer>
           <Score>{ p.voteScore }</Score>
           <TextAction>
-            <Link to={`/post/${p.id}`}>
+            <Link to={`/category/${p.id}`}>
               { p.title }
             </Link>
           </TextAction>
@@ -106,7 +106,7 @@ const PostsSection = ({ posts, sortBy, isAsc, sort, deletePost }) => (
               </Link>
             </TextAction>
             <TextAction onClick={deletePost(p.id)}>
-            delete
+              delete
             </TextAction>
           </ItemContainer>
         </Item>

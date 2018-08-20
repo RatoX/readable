@@ -56,7 +56,7 @@ const CategoriesHeader = ({ categories }) => (
       </Item>
       {categories && categories.map((c, i) => (
         <Item key={i} >
-          <StyledLink exact to={`/category/${c.path}`}>
+          <StyledLink exact to={`/category/type/${c.path}`}>
             { c.name }
           </StyledLink>
         </Item>
