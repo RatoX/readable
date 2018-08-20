@@ -32,7 +32,7 @@ class App extends Component {
             <Route exact path='/category/:id' render={({ match }) => (
               <Post id={match.params.id} />
             )} />
-            <Route exact path='/post/:id/edit' render={({ match }) => (
+            <Route exact path='/category/:id/edit' render={({ match }) => (
               <PostEdit id={match.params.id} />
             )} />
             <Route render={() => (

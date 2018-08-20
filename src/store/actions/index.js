@@ -25,6 +25,7 @@ const receivePostComments = (id, data) => {
     }
   }
 }
+
 const receivePosts = (data) => {
   const posts = data.reduce((acc, cur) => {
     acc[cur.id] = { ...cur }
@@ -37,10 +38,22 @@ const receivePosts = (data) => {
   }
 }
 
+const checkIfExists = (id, data) => {
+  if (data && data.id) {
+    return data
+  }
+
+  return {
+    deleted: true,
+    id,
+  }
+}
+
 export function loadPost(id) {
   return function(dispatch) {
     return fetch(`http://localhost:3001/posts/${id}`, { headers: { 'Authorization': TOKEN } })
       .then((s) => s.json())
+      .then((d) => checkIfExists(id, d))
       .then((d) => dispatch(receivePost(d)))
   }
 }

@@ -6,6 +6,7 @@ import { compose, lifecycle } from 'recompose'
 import { Link } from 'react-router-dom'
 import { loadPost as loadPostAction, loadComments as loadCommentsAction } from '../../store/actions'
 import Section from '../styles/Section'
+import withPostNotFound from '../../hoc/utils/withPostNotFound'
 import Comments from './Comments'
 import Actions from './Actions'
 import Vote from '../Vote'
@@ -80,6 +81,7 @@ function mapStateToProps (state, props) {
 }
 
 export default compose(
+  withPostNotFound,
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentDidMount() {
@@ -88,5 +90,5 @@ export default compose(
       loadPost(id)
       loadComments(id)
     }
-  })
+  }),
 )(Post)
