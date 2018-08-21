@@ -28,7 +28,7 @@ const PostEdit = ({ id }) => (
 )
 
 PostEdit.propTypes = {
-  id: PropTypes.string.required,
+  id: PropTypes.string,
 }
 
 export default compose(

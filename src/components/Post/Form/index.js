@@ -76,11 +76,11 @@ function mapStateToProps (state) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps (dispatch, props) {
   return {
     addPost: ({ author, body, title, category }) => dispatch(addPostAction({ author, body, title, category })),
     editPost: ({ id, author, body, title, category }) => dispatch(editPostAction({ id, author, body, title, category })),
-    loadPost: (id) => dispatch(loadPostAction(id)),
+    loadingPostPromise: dispatch(loadPostAction(props.id)),
   }
 }
 
@@ -101,10 +101,10 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { id, loadPost, setAuthor, setTitle, setCategory, setBody } = this.props
+      const { id, setAuthor, setTitle, setCategory, setBody, loadingPostPromise } = this.props
 
       if (id) {
-        loadPost(id)
+        loadingPostPromise
           .then(({ post }) => {
             const { author, title, body, category } = post
 
@@ -114,7 +114,13 @@ export default compose(
             setCategory(category)
           })
       }
-    }
+    },
+
+    componentWillUnmount () {
+      const { loadingPostPromise } = this.props
+
+      loadingPostPromise.cancel()
+    },
   }),
   withStateHandlers({}, {
     cleanData: () => () => ({

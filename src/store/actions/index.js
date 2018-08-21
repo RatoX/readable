@@ -8,6 +8,29 @@ function uuidv4() {// eslint-disable-next-line
   )
 }
 
+// https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
+// with some improvements
+const makeCancelable = (promise) => {
+  let hasCanceled_ = false
+
+  const wrappedPromise = new Promise((resolve, reject) => {
+    promise.then(
+      val => hasCanceled_ ? reject({isCanceled: true}) : resolve(val),
+      error => hasCanceled_ ? reject({isCanceled: true}) : reject(error)
+    )
+  })
+
+  return {
+    promise: wrappedPromise,
+    then(cb) {
+      wrappedPromise.then(cb)
+    },
+    cancel() {
+      hasCanceled_ = true
+    },
+  }
+}
+
 const TOKEN = 'dsdd'
 const receivePost = (post) => ({ type: UPDATE_POST, post })
 const receiveComment = (comment) => ({ type: UPDATE_POST_COMMENT, comment })
@@ -49,12 +72,24 @@ const checkIfExists = (id, data) => {
   }
 }
 
+function makeRequest(path, method = 'GET') {
+  const headers = {
+    'Authorization': TOKEN,
+    'Content-Type': 'application/json'
+  }
+  const request = fetch(`http://localhost:3001/${path}`, { method, headers })
+  request.then((s) => s.json())
+
+  return makeCancelable(request)
+}
+
 export function loadPost(id) {
   return function(dispatch) {
-    return fetch(`http://localhost:3001/posts/${id}`, { headers: { 'Authorization': TOKEN } })
-      .then((s) => s.json())
-      .then((d) => checkIfExists(id, d))
-      .then((d) => dispatch(receivePost(d)))
+    if (id) {
+      return makeRequest(`posts/${id}`)
+        .then((d) => checkIfExists(id, d))
+        .then((d) => dispatch(receivePost(d)))
+    }
   }
 }
 
