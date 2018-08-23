@@ -58,10 +58,10 @@ Post.propTypes = {
   voteScore: PropTypes.number,
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps (dispatch, props) {
   return {
-    loadPost: (id) => dispatch(loadPostAction(id)),
-    loadComments: (id) => dispatch(loadCommentsAction(id)),
+    loadingPostPromise: dispatch(loadPostAction(props.id)),
+    loadingCommentsPromise: dispatch(loadCommentsAction(props.id)),
   }
 }
 
@@ -84,11 +84,11 @@ export default compose(
   withPostNotFound,
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
-    componentDidMount() {
-      const { id, loadPost, loadComments } = this.props
+    componentWillUnmount () {
+      const { loadingPostPromise, loadingCommentsPromise } = this.props
 
-      loadPost(id)
-      loadComments(id)
-    }
+      loadingPostPromise.cancel()
+      loadingCommentsPromise.cancel()
+    },
   }),
 )(Post)

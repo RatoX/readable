@@ -23,7 +23,7 @@ const makeCancelable = (promise) => {
   return {
     promise: wrappedPromise,
     then(cb) {
-      wrappedPromise.then(cb)
+      promise.then(cb)
     },
     cancel() {
       hasCanceled_ = true
@@ -77,10 +77,10 @@ function makeRequest(path, method = 'GET') {
     'Authorization': TOKEN,
     'Content-Type': 'application/json'
   }
-  const request = fetch(`http://localhost:3001/${path}`, { method, headers })
-  request.then((s) => s.json())
+  const r = fetch(`http://localhost:3001/${path}`, { method, headers })
+  r.then((s) => s.json())
 
-  return makeCancelable(request)
+  return makeCancelable(r)
 }
 
 export function loadPost(id) {
@@ -95,8 +95,7 @@ export function loadPost(id) {
 
 export function loadComments(id) {
   return function(dispatch) {
-    return fetch(`http://localhost:3001/posts/${id}/comments`, { headers: { 'Authorization': TOKEN } })
-      .then((s) => s.json())
+    return makeRequest(`posts/${id}/comments`)
       .then((d) => dispatch(receivePostComments(id, d)))
   }
 }
