@@ -9,7 +9,7 @@ import TextAction from '../../styles/TextAction'
 const Actions = ({ id, deletePost }) => (
   <React.Fragment>
     <TextAction>
-      <Link to={`/post/${id}/edit`}>
+      <Link to={`/category/${id}/edit`}>
         edit
       </Link>
     </TextAction>

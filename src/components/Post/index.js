@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { loadPost as loadPostAction, loadComments as loadCommentsAction } from '../../store/actions'
 import Section from '../styles/Section'
 import withPostNotFound from '../../hoc/utils/withPostNotFound'
+import makeCancelable from '../../utils/makeCancelable'
 import Comments from './Comments'
 import Actions from './Actions'
 import Vote from '../Vote'
@@ -59,9 +60,11 @@ Post.propTypes = {
 }
 
 function mapDispatchToProps (dispatch, props) {
+  const { id } = props
+
   return {
-    loadingPostPromise: dispatch(loadPostAction(props.id)),
-    loadingCommentsPromise: dispatch(loadCommentsAction(props.id)),
+    loadingCommentsPromise: makeCancelable(dispatch(loadCommentsAction(id))),
+    loadingPostPromise: makeCancelable(dispatch(loadPostAction(id))),
   }
 }
 

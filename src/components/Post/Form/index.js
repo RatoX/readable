@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Section from '../../styles/Section'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import makeCancelable from '../../../utils/makeCancelable'
+import Section from '../../styles/Section'
 import { compose, lifecycle, withState, withProps, withHandlers, withStateHandlers } from 'recompose'
 import { editPost as editPostAction, addPost as addPostAction, loadPost as loadPostAction  } from '../../../store/actions'
 
@@ -80,7 +81,7 @@ function mapDispatchToProps (dispatch, props) {
   return {
     addPost: ({ author, body, title, category }) => dispatch(addPostAction({ author, body, title, category })),
     editPost: ({ id, author, body, title, category }) => dispatch(editPostAction({ id, author, body, title, category })),
-    loadingPostPromise: dispatch(loadPostAction(props.id)),
+    loadingPostPromise: makeCancelable(dispatch(loadPostAction(props.id))),
   }
 }
 
