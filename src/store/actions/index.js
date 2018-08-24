@@ -49,13 +49,19 @@ const checkIfExists = (id, data) => {
   }
 }
 
-function makeRequest(path, method = 'GET') {
+function makeRequest(path, method = 'GET', body) {
   const headers = {
     'Authorization': TOKEN,
     'Content-Type': 'application/json'
   }
 
-  return fetch(`http://localhost:3001/${path}`, { method, headers })
+  const options = { method, headers }
+
+  if (body) {
+    options.body = JSON.stringify(body)
+  }
+
+  return fetch(`http://localhost:3001/${path}`, options)
     .then((s) => s.json())
 }
 
@@ -151,11 +157,9 @@ export function addComment(postId, { author, body }) {
     body,
     author,
   }
-  const bodyHttp = JSON.stringify(comment)
 
   return function(dispatch) {
-    return fetch('http://localhost:3001/comments', { body: bodyHttp, method: 'POST', headers: { 'Authorization': TOKEN } })
-      .then((s) => s.json())
+    return makeRequest('comments', 'POST', comment)
       .then((d) => dispatch(receiveComment({ ...comment, ...d })))
   }
 }
