@@ -23,7 +23,7 @@ const Body = styled.p`
   margin: 15px 0;
 `
 
-const Post = ({ id, title, body, author, commentCount, comments, voteScore }) => (
+const Post = ({ id, title, body, author, commentCount, comments, voteScore, category }) => (
   <Section>
     <Link to='/'>
       {'<'} Back
@@ -40,11 +40,11 @@ const Post = ({ id, title, body, author, commentCount, comments, voteScore }) =>
         { voteScore } total of votes
         <Vote id={id} />
       </small>
+      <Section>
+        <Actions id={id} category={category} />
+      </Section>
     </Information>
     <Comments postId={id} comments={comments} />
-    <Section>
-      <Actions id={id} />
-    </Section>
   </Section>
 )
 
@@ -57,6 +57,7 @@ Post.propTypes = {
   commentCount: PropTypes.number,
   comments: PropTypes.array,
   voteScore: PropTypes.number,
+  category: PropTypes.string,
 }
 
 function mapDispatchToProps (dispatch, props) {
@@ -79,6 +80,7 @@ function mapStateToProps (state, props) {
     author: post.author,
     commentCount: post.commentCount,
     voteScore: post.voteScore,
+    category: post.category,
     comments: Object.values(post.comments || {}),
   }
 }

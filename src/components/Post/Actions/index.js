@@ -6,10 +6,10 @@ import { Link, withRouter } from 'react-router-dom'
 import { deletePost as deletePostAction } from '../../../store/actions'
 import TextAction from '../../styles/TextAction'
 
-const Actions = ({ id, deletePost }) => (
+const Actions = ({ id, deletePost, category }) => (
   <React.Fragment>
     <TextAction>
-      <Link to={`/category/${id}/edit`}>
+      <Link to={`/${category}/${id}/edit`}>
         edit
       </Link>
     </TextAction>
@@ -23,6 +23,7 @@ const Actions = ({ id, deletePost }) => (
 Actions.propTypes = {
   id: PropTypes.string,
   deletePost: PropTypes.func,
+  category: PropTypes.string,
 }
 
 function mapDispatchToProps (dispatch) {

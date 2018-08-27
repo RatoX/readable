@@ -91,7 +91,7 @@ const PostsSection = ({ posts, sortBy, isAsc, sort }) => (
           </ItemContainer>
           <Score>{ p.voteScore }</Score>
           <TextAction>
-            <Link to={`/category/${p.id}`}>
+            <Link to={`/${p.category}/${p.id}`}>
               { p.title }
             </Link>
           </TextAction>
@@ -99,7 +99,7 @@ const PostsSection = ({ posts, sortBy, isAsc, sort }) => (
           <ItemContainer>{ p.commentCount }</ItemContainer>
           <ItemContainer>{ p.category }</ItemContainer>
           <ItemContainer>
-            <Actions id={p.id} />
+            <Actions id={p.id} category={p.category} />
           </ItemContainer>
         </Item>
       ))}
